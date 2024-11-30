@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        CI = 'true' 
+        CI='true' 
     }
     stages {
         stage('Build') {
@@ -11,7 +11,8 @@ pipeline {
         }
         stage('Test'){
             steps{
-                bat '"C:\\Program Files\\Git\\bin\\bash.exe" -c "chmod +x "./jenkins/scripts/test.sh && ./jenkins/scripts/test.sh"'
+                bat 'echo Running test script'
+                bat 'C:\\Program Files\\Git\\bin\\bash.exe -c "chmod +x "./jenkins/scripts/test.sh && ./jenkins/scripts/test.sh"'
             }
         }
     }
