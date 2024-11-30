@@ -17,5 +17,25 @@ pipeline {
                 bat '"C:\\Program Files\\Git\\bin\\bash.exe" -c "./jenkins/scripts/test.sh"'            
                 }
         }
+        stage('Deliver for development') {
+            when {
+                branch 'development'
+            }
+            steps {
+                bat '"C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/deliver-for-development.sh'
+                input message: 'Finished using the website? (Click "Proceed" to continue)',timeout: 300
+                bat '""C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/kill.sh'
+            }
+        }
+        stage('Deploy for production') {
+            when {
+                branch 'development'
+            }
+            steps {
+                bat '"C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/deploy-for-production.sh'
+                input message: 'Finished using the website? (Click "Proceed" to continue)',timeout: 300
+                bat '""C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/kill.sh'
+            }
+        }
     }
 }
