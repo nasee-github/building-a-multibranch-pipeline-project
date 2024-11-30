@@ -4,32 +4,21 @@ pipeline {
         CI = 'true'
     }
     stages {
-        stage('Debug Environment') {
-            steps {
-                echo 'Current Workspace:'
-                sh 'pwd'
-                echo 'Listing Workspace Files:'
-                sh 'ls -la'
-            }
-        }
         stage('Build') {
             steps {
-                echo 'Running npm install...'
                 sh 'npm install'
             }
         }
         stage('Test') {
             steps {
-                echo 'Executing Test Script...'
                 sh './jenkins/scripts/test.sh'
             }
         }
-        stage('Deliver for Development') {
+        stage('Deliver for development') {
             when {
                 branch 'development'
             }
             steps {
-                echo 'Delivering for development...'
                 sh './jenkins/scripts/deliver-for-development.sh'
                 timeout(time: 5, unit: 'MINUTES') {
                     input message: 'Finished using the web site? (Click "Proceed" to continue)'
@@ -37,12 +26,11 @@ pipeline {
                 sh './jenkins/scripts/kill.sh'
             }
         }
-        stage('Deploy for Production') {
+        stage('Deploy for production') {
             when {
                 branch 'production'
             }
             steps {
-                echo 'Deploying for production...'
                 sh './jenkins/scripts/deploy-for-production.sh'
                 timeout(time: 5, unit: 'MINUTES') {
                     input message: 'Finished using the web site? (Click "Proceed" to continue)'
