@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat '"C:\\Program Files\\Git\\bin\\bash.exe" -c "./jenkins/scripts/test.sh"'            
+                bat '"C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/test.sh'            
                 }
         }
         stage('Deliver for development') {
@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 bat '"C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/deliver-for-development.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)',timeout: 300
+                input message: 'Finished using the web site? (Click "Proceed" to continue)', timeout: 300
                 bat '"C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/kill.sh'
             }
         }
@@ -30,7 +30,7 @@ pipeline {
             }
             steps {
                 bat '"C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/deploy-for-production.sh'
-                input message: 'Finished using the website? (Click "Proceed" to continue)',timeout: 300
+                input message: 'Finished using the web site? (Click "Proceed" to continue)', timeout: 300
                 bat '"C:\\Program Files\\Git\\bin\\bash.exe" ./jenkins/scripts/kill.sh'
             }
         }
